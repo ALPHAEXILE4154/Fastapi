@@ -67,15 +67,18 @@ def create_std(std_id : int, student : Student): #student is a variable which wi
     students[std_id]= student
     return students[std_id]  
 @app.put("/update-student/{std_id}")
-def updating(student:updatestudent,std_id:int):
+def updating(student: updatestudent, std_id: int):
     if std_id not in students:
-        return{"Error":"Student is not in the list"}
-    if students.name != None:
-        students[std_id]["name"] = student.name
-    if students.age != None:
-        students[std_id]["age"]=student.age
-    if students.year != None:
-        students[std_id]["year"]=student.year
-    if students.hobbies != None:
-        students[std_id]["hobbies"]= students.hobbies
+        return {"Error": "Student is not in the list"}
+    
+    if student.name is not None:
+        students[std_id].name = student.name
+    if student.age is not None:
+        students[std_id].age = student.age
+    if student.year is not None:
+        students[std_id].year = student.year
+    if student.hobbies is not None:
+        students[std_id].hobbies = student.hobbies
+
     return students[std_id]
+
