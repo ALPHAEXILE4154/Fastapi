@@ -28,6 +28,11 @@ class Student(BaseModel): #Using Basemodel to create a schema for the student da
     age: str
     year: str
     hobbies: str
+class updatestudent(BaseModel):    #This is a schema used to update a students info.
+    name: Optional[str] = None #The Optional[str]= None is used to ensure that user can edit a single value instead of all values for it to work.
+    age: Optional[str] = None
+    year: Optional[str] = None
+    hobbies: Optional[str] = None
 
 @app.get("/") # This is the default page of the api
 def index():
@@ -36,12 +41,12 @@ def index():
 def login():
     return {"message": "You have succesfully arrived at the FUCKING login page!"}
 @app.get("/student_desc/{std_id}") # This endpoint will take a student ID and return the student's description from the dictionary created above named students 
-def std_info(std_id: str):
+def std_info(std_id: int):
     if std_id in students:
 
         return{"message":"Welcome to student description page !\n","Description":students[std_id]}
     else:
-        return{"message":"Invalid ID number please enter from 1/2/3"}
+        return{"message":"Invalid ID"}
 @app.get("/get_by_name")# This is an example of using a query parameter to get student information by name
 def std_name(name: Optional[str] = None):#BY using optional we can make the name parater in docs optional it neccesaary to put 'None' to ensure that it can accept blank values,
                                          #This us done by using the Path and Optional from fastapi
@@ -61,3 +66,16 @@ def create_std(std_id : int, student : Student): #student is a variable which wi
             return{"mesaage":"This name is already associated with a different ID"}
     students[std_id]= student
     return students[std_id]  
+@app.put("/update-student/{std_id}")
+def updating(student:updatestudent,std_id:int):
+    if std_id not in students:
+        return{"Error":"Student is not in the list"}
+    if students.name != None:
+        students[std_id]["name"] = student.name
+    if students.age != None:
+        students[std_id]["age"]=student.age
+    if students.year != None:
+        students[std_id]["year"]=student.year
+    if students.hobbies != None:
+        students[std_id]["hobbies"]= students.hobbies
+    return students[std_id]
