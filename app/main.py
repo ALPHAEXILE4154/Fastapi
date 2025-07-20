@@ -81,4 +81,10 @@ def updating(student: updatestudent, std_id: int):
         students[std_id].hobbies = student.hobbies
 
     return students[std_id]
+@app.delete("/delete_student/{std_id}")
+def deleting(std_id: int):
+    if std_id not in students:
+        return{"Mesaage": "Student does not exists in this database."}
+    del students[std_id]
+    return {"Message": "Student data deleted successfully."}
 
