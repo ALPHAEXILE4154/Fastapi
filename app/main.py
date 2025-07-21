@@ -2,7 +2,7 @@ from fastapi import FastAPI,Path
 from typing import Optional
 from pydantic import BaseModel
 
-app = FastAPI()
+app = FastAPI() # app is an instance of the FastAPI..
 students ={
     1:{
         "name": "Ashmit Amit Rane",
@@ -81,4 +81,13 @@ def updating(student: updatestudent, std_id: int):
         students[std_id].hobbies = student.hobbies
 
     return students[std_id]
+@app.delete("/delete_student/{std_id}") #This endpoint will delete the student data from the dictionary using the student ID (dictionary key).
+def deleting(std_id: int):
+    if std_id not in students:
+        return{"Mesaage": "Student does not exists in this database."}
+    del students[std_id] # del is used to delete the key from the dictionary.
+    return {"Message": "Student data deleted successfully."}
 
+#We have used the FastAPI framework to create a simple API that can be used to manage student data.
+#Here we have completed the basic CRUD operations using FastAPI.
+#The crash course of FastAPI by FreeCOdeCamp teaches all this. 
