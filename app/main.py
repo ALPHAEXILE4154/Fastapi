@@ -2,7 +2,7 @@ from fastapi import FastAPI,Path
 from typing import Optional
 from pydantic import BaseModel
 
-app = FastAPI()
+app = FastAPI() # app is an instance of the FastAPI..
 students ={
     1:{
         "name": "Ashmit Amit Rane",
